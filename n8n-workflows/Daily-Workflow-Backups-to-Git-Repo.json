@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "0a3db92c-6398-41bf-940c-d061e8cff02c",
+  "versionId": "111af296-d073-4acb-b8d1-15890a4dfc1d",
   "nodes": [
     {
       "parameters": {
@@ -94,20 +94,6 @@
     },
     {
       "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst folderName = $json.config.subPath ?? 'n8n-workflows';\nconst folderPath = path.join($json.config.localRepoPath, folderName);\n\nif ($json.config.deleteOldWorkflows && fs.existsSync(folderPath)) { \n  fs.rmSync(folderPath, { recursive: true, force: true });\n  console.log(`Deleted folder: ${folderPath}`);\n}\n\nif (!fs.existsSync(folderPath)) {\n  fs.mkdirSync(folderPath, { recursive: true });\n  console.log(`Created folder: ${folderPath}`);\n} else {\n  console.log(`Folder already exists: ${folderPath}`);\n}\n\nreturn { \n  ...$json,\n  backupFolderPath: folderPath \n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1456,
-        1040
-      ],
-      "id": "323a801a-be1e-4dfb-bbb8-77adf30609f7",
-      "name": "(Re-)Create backup folder"
-    },
-    {
-      "parameters": {
         "filters": {},
         "requestOptions": {}
       },
@@ -148,7 +134,7 @@
     {
       "parameters": {
         "operation": "write",
-        "fileName": "={{ $('(Re-)Create backup folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
+        "fileName": "={{ $('(Re-)Create workflow folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
@@ -183,7 +169,7 @@
       "parameters": {
         "operation": "commit",
         "repositoryPath": "={{ $('Continue - Commit').item.json.config.localRepoPath }}",
-        "message": "=Backup {{ DateTime.now().toISO() }}",
+        "message": "Update and publish workflows",
         "options": {}
       },
       "type": "n8n-nodes-base.git",
@@ -412,7 +398,7 @@
             {
               "id": "314eda1c-cc62-4430-8eeb-1aa5f0f3e8c0",
               "name": "config.repository",
-              "value": "https://github.com/your-username/n8n-workflows-backup.git",
+              "value": "https://github.com/your-username/n8n-workflows-backups.git",
               "type": "string"
             },
             {
@@ -459,6 +445,20 @@
         816
       ],
       "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst folderName = $json.config.subPath ?? 'n8n-workflows';\nconst folderPath = path.join($json.config.localRepoPath, folderName);\n\nif ($json.config.deleteOldWorkflows && fs.existsSync(folderPath)) { \n  fs.rmSync(folderPath, { recursive: true, force: true });\n  console.log(`Deleted folder: ${folderPath}`);\n}\n\nif (!fs.existsSync(folderPath)) {\n  fs.mkdirSync(folderPath, { recursive: true });\n  console.log(`Created folder: ${folderPath}`);\n} else {\n  console.log(`Folder already exists: ${folderPath}`);\n}\n\nreturn { \n  ...$json,\n  backupFolderPath: folderPath \n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1456,
+        1040
+      ],
+      "id": "323a801a-be1e-4dfb-bbb8-77adf30609f7",
+      "name": "(Re-)Create workflow folder"
     }
   ],
   "connections": {
@@ -506,17 +506,6 @@
             "node": "Continue - Commit",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "(Re-)Create backup folder": {
-      "main": [
-        [
-          {
-            "node": "Get Workflows1",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -591,7 +580,7 @@
       "main": [
         [
           {
-            "node": "(Re-)Create backup folder",
+            "node": "(Re-)Create workflow folder",
             "type": "main",
             "index": 0
           }
@@ -658,6 +647,17 @@
         [
           {
             "node": "Enrich Config (generated)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "(Re-)Create workflow folder": {
+      "main": [
+        [
+          {
+            "node": "Get Workflows1",
             "type": "main",
             "index": 0
           }
