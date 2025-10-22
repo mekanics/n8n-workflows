@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "a902f635-1fc9-41d8-803d-c72303e1bcc3",
+  "versionId": "17e92f0d-7ba0-47ac-ae6d-deb682088a9d",
   "nodes": [
     {
       "parameters": {
@@ -43,13 +43,7 @@
       ],
       "id": "ec5c0caf-f635-4b27-9c79-45b046bc3a97",
       "name": "Clone Backup Repo",
-      "alwaysOutputData": false,
-      "credentials": {
-        "gitPassword": {
-          "id": "Rm8KlF9v3Dm80fXd",
-          "name": "Github Account"
-        }
-      }
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -89,13 +83,7 @@
         1632,
         1040
       ],
-      "typeVersion": 1,
-      "credentials": {
-        "n8nApi": {
-          "id": "9HA2FhP5NuO6Qmbf",
-          "name": "n8n localhost"
-        }
-      }
+      "typeVersion": 1
     },
     {
       "parameters": {
@@ -119,7 +107,7 @@
     {
       "parameters": {
         "operation": "write",
-        "fileName": "={{ $('(Re-)Create workflow folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
+        "fileName": "={{ $('(Re-)Create backup folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
@@ -180,13 +168,7 @@
         1264
       ],
       "id": "427eaef5-debd-485c-ac9f-fd779b47d55c",
-      "name": "Git - Push",
-      "credentials": {
-        "gitPassword": {
-          "id": "Rm8KlF9v3Dm80fXd",
-          "name": "Github Account"
-        }
-      }
+      "name": "Git - Push"
     },
     {
       "parameters": {
@@ -363,7 +345,7 @@
         1040
       ],
       "id": "323a801a-be1e-4dfb-bbb8-77adf30609f7",
-      "name": "(Re-)Create workflow folder"
+      "name": "(Re-)Create backup folder"
     },
     {
       "parameters": {
@@ -580,7 +562,7 @@
       "main": [
         [
           {
-            "node": "(Re-)Create workflow folder",
+            "node": "(Re-)Create backup folder",
             "type": "main",
             "index": 0
           }
@@ -653,7 +635,7 @@
         ]
       ]
     },
-    "(Re-)Create workflow folder": {
+    "(Re-)Create backup folder": {
       "main": [
         [
           {

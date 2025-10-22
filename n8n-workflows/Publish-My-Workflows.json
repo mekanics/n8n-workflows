@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "6386301c-3506-473e-8ca4-e59c58b6fc3b",
+  "versionId": "16a038f5-baec-435e-bf8c-06d4113b4db7",
   "nodes": [
     {
       "parameters": {
@@ -43,13 +43,7 @@
       ],
       "id": "34011336-c5dc-4e8e-a430-93cf279fe36c",
       "name": "Clone Backup Repo",
-      "alwaysOutputData": false,
-      "credentials": {
-        "gitPassword": {
-          "id": "Rm8KlF9v3Dm80fXd",
-          "name": "Github Account"
-        }
-      }
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -79,40 +73,6 @@
     },
     {
       "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst folderName = $json.config.subPath ?? 'n8n-workflows';\nconst folderPath = path.join($json.config.localRepoPath, folderName);\n\nif ($json.config.deleteOldWorkflows && fs.existsSync(folderPath)) { \n  fs.rmSync(folderPath, { recursive: true, force: true });\n  console.log(`Deleted folder: ${folderPath}`);\n}\n\nif (!fs.existsSync(folderPath)) {\n  fs.mkdirSync(folderPath, { recursive: true });\n  console.log(`Created folder: ${folderPath}`);\n} else {\n  console.log(`Folder already exists: ${folderPath}`);\n}\n\nreturn { \n  ...$json,\n  backupFolderPath: folderPath \n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1168,
-        112
-      ],
-      "id": "6a2d4c0b-3b15-4f01-b9ef-44d017a7c190",
-      "name": "(Re-)Create backup folder"
-    },
-    {
-      "parameters": {
-        "filters": {},
-        "requestOptions": {}
-      },
-      "id": "8169bfcb-45e3-4091-bd96-142ccaca16b1",
-      "name": "Get Workflows1",
-      "type": "n8n-nodes-base.n8n",
-      "position": [
-        1344,
-        112
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "n8nApi": {
-          "id": "9HA2FhP5NuO6Qmbf",
-          "name": "n8n localhost"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "toJson",
         "mode": "each",
         "options": {
@@ -133,7 +93,7 @@
     {
       "parameters": {
         "operation": "write",
-        "fileName": "={{ $('(Re-)Create backup folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
+        "fileName": "={{ $('(Re-)Create workflow folder').item.json.backupFolderPath }}/{{ $binary.data.fileName }}",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
@@ -194,13 +154,7 @@
         560
       ],
       "id": "616952eb-abe5-4afa-913c-85d8b3e2178a",
-      "name": "Git - Push",
-      "credentials": {
-        "gitPassword": {
-          "id": "Rm8KlF9v3Dm80fXd",
-          "name": "Github Account"
-        }
-      }
+      "name": "Git - Push"
     },
     {
       "parameters": {
@@ -449,7 +403,7 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const anonymize = (text) => text  \n  // replace email domains\n  .replace(/(?<=@)[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}/g, \"example.com\")\n  // replace GitHub usernames\n  .replace(/github\\.com\\/[^/]+\\//g, \"github.com/your-username/\");\n\n// Separate sticky notes from other nodes\nconst workflow = $json;\nconst stickyNotes = [];\nconst otherNodes = [];\n\nif (workflow.nodes && Array.isArray(workflow.nodes)) {\n  workflow.nodes.forEach(node => {\n    if (node.type === 'n8n-nodes-base.stickyNote') {\n      stickyNotes.push(node);\n    } else {\n      otherNodes.push(node);\n    }\n  });\n}\n\n// Anonymize only non-sticky-note nodes\nconst anonymizedNodes = otherNodes.map(node => {\n  const nodeText = JSON.stringify(node);\n  const anonymized = anonymize(nodeText);\n  return JSON.parse(anonymized);\n});\n\n// Combine back: anonymized nodes + original sticky notes\nworkflow.nodes = [...anonymizedNodes, ...stickyNotes];\n\nreturn workflow;"
+        "jsCode": "const anonymize = (text) => text  \n  // replace email domains\n  .replace(/(?<=@)[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}/g, \"example.com\")\n  // replace GitHub usernames\n  .replace(/github\\.com\\/[^/]+\\//g, \"github.com/your-username/\");\n\n // Recursively set properties ending with 'Id' to undefined\n const anonymizeIds = (obj) => {\n  if (typeof obj !== 'object' || obj === null) {\n     return obj; \n  }\n   \n  if (Array.isArray(obj)) {\n     return obj.map(item => anonymizeIds(item)); \n  }\n   \n   const result = {};\n   for (const key in obj) {\n     if (key.endsWith('Id') && typeof obj[key] === 'string') {\n       result[key] = undefined; \n    } else if (typeof obj[key] === 'object') {\n       result[key] = anonymizeIds(obj[key]); \n    } else {\n       result[key] = obj[key]; \n    }\n   }\n   return result;\n };\n\n// Separate sticky notes from other nodes\nconst workflow = $json;\nconst stickyNotes = [];\nconst otherNodes = [];\n\nif (workflow.nodes && Array.isArray(workflow.nodes)) {\n  workflow.nodes.forEach(node => {\n    if (node.type === 'n8n-nodes-base.stickyNote') {\n      stickyNotes.push(node);\n    } else {\n      otherNodes.push(node);\n    }\n  });\n}\n\n// Anonymize only non-sticky-note nodes\nconst anonymizedNodes = otherNodes.map(node => {\n  // Remove credentials property\n  delete node.credentials;\n\n  // Anonymize IDs in parameters\n  if (node.parameters) {\n     node.parameters = anonymizeIds(node.parameters); \n  }\n  \n  const nodeText = JSON.stringify(node);\n  const anonymized = anonymize(nodeText);\n  return JSON.parse(anonymized);\n});\n\n// Combine back: anonymized nodes + original sticky notes\nworkflow.nodes = [...anonymizedNodes, ...stickyNotes];\n\nreturn workflow;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -459,6 +413,34 @@
       ],
       "id": "606c4822-7ff8-46b6-b0be-5cd669e072f1",
       "name": "Anonymise"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const fs = require('fs');\nconst path = require('path');\n\nconst folderName = $json.config.subPath ?? 'n8n-workflows';\nconst folderPath = path.join($json.config.localRepoPath, folderName);\n\nif ($json.config.deleteOldWorkflows && fs.existsSync(folderPath)) { \n  fs.rmSync(folderPath, { recursive: true, force: true });\n  console.log(`Deleted folder: ${folderPath}`);\n}\n\nif (!fs.existsSync(folderPath)) {\n  fs.mkdirSync(folderPath, { recursive: true });\n  console.log(`Created folder: ${folderPath}`);\n} else {\n  console.log(`Folder already exists: ${folderPath}`);\n}\n\nreturn { \n  ...$json,\n  backupFolderPath: folderPath \n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        112
+      ],
+      "id": "6a2d4c0b-3b15-4f01-b9ef-44d017a7c190",
+      "name": "(Re-)Create workflow folder"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "8169bfcb-45e3-4091-bd96-142ccaca16b1",
+      "name": "Get Workflows",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        1344,
+        112
+      ],
+      "typeVersion": 1
     },
     {
       "parameters": {
@@ -621,28 +603,6 @@
         ]
       ]
     },
-    "(Re-)Create backup folder": {
-      "main": [
-        [
-          {
-            "node": "Get Workflows1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Workflows1": {
-      "main": [
-        [
-          {
-            "node": "Keep 'public'",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Convert to File": {
       "main": [
         [
@@ -768,7 +728,7 @@
       "main": [
         [
           {
-            "node": "(Re-)Create backup folder",
+            "node": "(Re-)Create workflow folder",
             "type": "main",
             "index": 0
           }
@@ -802,6 +762,28 @@
         [
           {
             "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "(Re-)Create workflow folder": {
+      "main": [
+        [
+          {
+            "node": "Get Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Workflows": {
+      "main": [
+        [
+          {
+            "node": "Keep 'public'",
             "type": "main",
             "index": 0
           }

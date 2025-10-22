@@ -1,0 +1,50 @@
+{
+  "name": "On Error – Telegram",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "55945c5b-4e8d-4fb6-a29a-aec9f162b635",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3e4d98d1-7585-4dc9-bfa3-66457ef9a310",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "text": "=🚨 An error occurred in n8n\n\n{{ $json.workflow.name }}\nError Message:  {{ $json.execution.error.message }}\nWorkflow: {{ $json.execution.url }}\nExecution Id: {{ $json.execution.id }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "491efdc5-360d-45a0-879e-70bf9abcfa92",
+      "name": "Send a text message",
+      "webhookId": "4cb02b5a-7ea8-4255-9f4c-e4c4a1ead07f"
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
