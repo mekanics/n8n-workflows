@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "f972ab50-111c-4cca-84b7-b6512889c869",
+  "versionId": "6386301c-3506-473e-8ca4-e59c58b6fc3b",
   "nodes": [
     {
       "parameters": {
@@ -235,86 +235,6 @@
     },
     {
       "parameters": {
-        "content": "### Configure Git",
-        "height": 220,
-        "width": 1180,
-        "color": 2
-      },
-      "id": "1a5e8587-6536-4dd4-97d6-b657a055df2a",
-      "name": "Sticky Note4",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        -160
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "### Retrieve, Filter, and Clean Workflows",
-        "height": 220,
-        "width": 1180,
-        "color": 3
-      },
-      "id": "0691b2fe-9c4a-4691-b61d-6f493549fe1d",
-      "name": "Sticky Note5",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        64
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "### Commit & Push",
-        "height": 220,
-        "width": 1180,
-        "color": 5
-      },
-      "id": "529d242f-3a06-4493-b48d-455ed4f90a8f",
-      "name": "Sticky Note6",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        512
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "### Clean up the local folder",
-        "height": 220,
-        "width": 1180,
-        "color": 6
-      },
-      "id": "c2c1b747-e8cd-450f-86c6-949aeafd20e7",
-      "name": "Sticky Note7",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        736
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "### Configure the workflow here",
-        "height": 284,
-        "width": 172,
-        "color": 2
-      },
-      "id": "e5bab717-738d-4694-9ea3-f5458da9a4be",
-      "name": "Sticky Note8",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        384,
-        -208
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "operation": "add",
         "repositoryPath": "={{ $json.config.localRepoPath }}",
         "pathsToAdd": "={{ $json.config.subPath }}"
@@ -407,7 +327,7 @@
             {
               "id": "836f121f-98aa-4313-99ce-e94a1e35f5dd",
               "name": "config.git.email",
-              "value": "n8n-workflow-oss@example.com",
+              "value": "n8n-workflow-oss@mekanics.ch",
               "type": "string"
             },
             {
@@ -481,22 +401,6 @@
     },
     {
       "parameters": {
-        "content": "### Create Files",
-        "height": 220,
-        "width": 1180,
-        "color": 4
-      },
-      "id": "5bf018a4-9930-4b56-9317-e9145f3a0f6d",
-      "name": "Sticky Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        288
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -545,7 +449,7 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const anonymize = (text) => text\n  // replace email domains\n  .replace(/(?<=@)[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g, \"example.com\")\n  // replace GitHub usernames\n  .replace(/github\\.com\\/[^/]+\\//g, \"github.com/your-username/\");\n\nconst jsonText = JSON.stringify($json)\nconst anonymized = anonymize(jsonText)\n\nconsole.log({jsonText, anonymized}) \n  \ntry {\n  return JSON.parse(anonymized);\n} catch (err) {\n  console.error(\"Invalid JSON string:\", err);\n  throw err\n}"
+        "jsCode": "const anonymize = (text) => text  \n  // replace email domains\n  .replace(/(?<=@)[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}/g, \"example.com\")\n  // replace GitHub usernames\n  .replace(/github\\.com\\/[^/]+\\//g, \"github.com/your-username/\");\n\n// Separate sticky notes from other nodes\nconst workflow = $json;\nconst stickyNotes = [];\nconst otherNodes = [];\n\nif (workflow.nodes && Array.isArray(workflow.nodes)) {\n  workflow.nodes.forEach(node => {\n    if (node.type === 'n8n-nodes-base.stickyNote') {\n      stickyNotes.push(node);\n    } else {\n      otherNodes.push(node);\n    }\n  });\n}\n\n// Anonymize only non-sticky-note nodes\nconst anonymizedNodes = otherNodes.map(node => {\n  const nodeText = JSON.stringify(node);\n  const anonymized = anonymize(nodeText);\n  return JSON.parse(anonymized);\n});\n\n// Combine back: anonymized nodes + original sticky notes\nworkflow.nodes = [...anonymizedNodes, ...stickyNotes];\n\nreturn workflow;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -558,8 +462,104 @@
     },
     {
       "parameters": {
-        "content": "# 🚀 Publish My Workflows\n\n## 📋 Description\n\nThis workflow automatically backs up and publishes your n8n workflows to GitHub, making them open-source and shareable with the community.\n\n## ⚙️ How It Works\n\n1. **Scheduled Execution** - Runs daily at 23:55\n2. **Workflow Retrieval** - Fetches all workflows from your n8n instance\n3. **Filtering** - Only processes workflows tagged with `public`\n4. **Anonymization** - Removes sensitive information (email domains, GitHub usernames)\n5. **Git Sync** - Commits and pushes workflow JSON files to your GitHub repository\n6. **Cleanup** - Removes temporary files after successful upload\n\n## 📦 What Gets Published\n\nEach published workflow includes:\n- Workflow nodes and connections\n- Settings and configuration\n- Version information\n- Workflow name (slugified as filename)\n\n## 🔒 Privacy & Security\n\n- Only workflows explicitly tagged as `public` are published\n- Sensitive data is automatically anonymized before publishing\n- Credentials and API keys are excluded from exports\n\n## 🛠️ Configuration\n\nUpdate the **Config** node to customize:\n- Target GitHub repository URL\n- Git commit author name and email\n- Subfolder path for workflow files\n- Whether to delete old workflows before backing up\n\n## 📬 Contact\n\nFor questions, suggestions, or contributions:\n- **GitHub**: [mekanics](https://github.com/your-username/n8n-workflows)\n- **Issues**: Report bugs or request features on the GitHub repository\n\n---\n\n*Perfect for sharing your automation templates with the n8n community!* ✨",
-        "height": 1176,
+        "content": "### Configure Git",
+        "height": 220,
+        "width": 1180,
+        "color": 2
+      },
+      "id": "1a5e8587-6536-4dd4-97d6-b657a055df2a",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        -160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Retrieve, Filter, and Clean Workflows",
+        "height": 220,
+        "width": 1180,
+        "color": 3
+      },
+      "id": "0691b2fe-9c4a-4691-b61d-6f493549fe1d",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Commit & Push",
+        "height": 220,
+        "width": 1180,
+        "color": 5
+      },
+      "id": "529d242f-3a06-4493-b48d-455ed4f90a8f",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        512
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Clean up the local folder",
+        "height": 220,
+        "width": 1180,
+        "color": 6
+      },
+      "id": "c2c1b747-e8cd-450f-86c6-949aeafd20e7",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        736
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Configure the workflow here",
+        "height": 284,
+        "width": 172,
+        "color": 2
+      },
+      "id": "e5bab717-738d-4694-9ea3-f5458da9a4be",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        384,
+        -208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Create Files",
+        "height": 220,
+        "width": 1180,
+        "color": 4
+      },
+      "id": "5bf018a4-9930-4b56-9317-e9145f3a0f6d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        288
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# 🚀 Publish My Workflows\n\n## 📋 Description\n\nThis workflow automatically backs up and publishes your n8n workflows to GitHub, making them open-source and shareable with the community.\n\n## ⚙️ How It Works\n\n1. **Scheduled Execution** - Runs daily at 23:55\n2. **Workflow Retrieval** - Fetches all workflows from your n8n instance\n3. **Filtering** - Only processes workflows tagged with `public`\n4. **Anonymization** - Removes sensitive information (email domains, GitHub usernames)\n5. **Git Sync** - Commits and pushes workflow JSON files to your GitHub repository\n6. **Cleanup** - Removes temporary files after successful upload\n\n## 📦 What Gets Published\n\nEach published workflow includes:\n- Workflow nodes and connections\n- Settings and configuration\n- Version information\n- Workflow name (slugified as filename)\n\n## 🔒 Privacy & Security\n\n- Only workflows explicitly tagged as `public` are published\n- Sensitive data is automatically anonymized before publishing\n- Credentials and API keys are excluded from exports\n\n## 🛠️ Configuration\n\nUpdate the **Config** node to customize:\n- Target GitHub repository URL\n- Git commit author name and email\n- Subfolder path for workflow files\n- Whether to delete old workflows before backing up\n\n## 📬 Contact\n\nFor questions, suggestions, or contributions:\n- **GitHub**: [mekanics](https://github.com/mekanics/n8n-workflows)\n- **Issues**: Report bugs or request features on the GitHub repository\n",
+        "height": 1112,
         "width": 656
       },
       "id": "294c5167-1f3a-478d-91a5-509c109c1a3a",
