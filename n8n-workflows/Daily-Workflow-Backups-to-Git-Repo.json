@@ -1,13 +1,28 @@
 {
-  "name": "Publish My Workflows",
+  "name": "Daily Workflow Backups to Git Repo",
   "settings": {
-    "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
+    "executionOrder": "v1",
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "24717f3b-8ce1-4eb6-bfa8-475cfb12cf84",
+  "versionId": "0a3db92c-6398-41bf-940c-d061e8cff02c",
   "nodes": [
+    {
+      "parameters": {
+        "content": "## 🧠 Daily Workflow Backups to Git Repo\n\nThis n8n workflow automatically backs up all your existing workflows to a Git repository on a scheduled basis.\nIt ensures version control, safe storage, and easy rollback of your n8n configurations.\n\n### ⚙️ How It Works\n1. Trigger\n   - Runs on a schedule (daily or as configured in the Schedule Trigger node).\n2. Configuration\n   - Defines key backup parameters:\n      - Git repository URL\n      - Local temporary path (/tmp/...)\n      - Subfolder name\n      - Option to delete old workflows before backup\n3. Git Setup\n   - Clones the remote repository\n   - Sets Git username and email for commits\n   - Prepares the local folder for storing exported workflows\n4. Backup Process\n   - Fetches all n8n workflows via API\n   - Converts each workflow into a formatted JSON file\n   - Writes the files to the designated backup folder\n5. Commit & Push\n   - Adds all workflow files to Git\n   - Commits changes with a timestamped message\n   - Pushes the updates to the remote repository\n6. Cleanup\n   - Removes the temporary local repository folder after a successful push\n\n### 🔗 Links\n- GitHub folder for backups:  [mekanics/n8n-workflows-backup](https://github.com/your-username/n8n-workflows-backup)\n\n### 📇 Contact\n- [Github](https://github.com/your-username//www.linkedin.com/in/jolyalexandre/)\n",
+        "height": 888,
+        "width": 656
+      },
+      "id": "3803f1ca-9296-46ce-8e35-01d8c5f9812c",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -224,
+        720
+      ],
+      "typeVersion": 1
+    },
     {
       "parameters": {
         "rule": {
@@ -19,12 +34,12 @@
           ]
         }
       },
-      "id": "48eda0ee-8ef1-4170-a814-41f19344d304",
+      "id": "ecb7924b-23f3-480d-aede-79edaa55be2a",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        192,
-        -112
+        480,
+        816
       ],
       "typeVersion": 1.2
     },
@@ -38,10 +53,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        992,
-        -112
+        1280,
+        816
       ],
-      "id": "34011336-c5dc-4e8e-a430-93cf279fe36c",
+      "id": "ec5c0caf-f635-4b27-9c79-45b046bc3a97",
       "name": "Clone Backup Repo",
       "alwaysOutputData": false,
       "credentials": {
@@ -71,10 +86,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        640,
-        -112
+        928,
+        816
       ],
-      "id": "9977507c-233d-4544-8d86-5abe1eb5638d",
+      "id": "e133436d-6adb-4e54-a4c5-b125eff94a85",
       "name": "Enrich Config (generated)"
     },
     {
@@ -85,10 +100,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1168,
-        112
+        1456,
+        1040
       ],
-      "id": "6a2d4c0b-3b15-4f01-b9ef-44d017a7c190",
+      "id": "323a801a-be1e-4dfb-bbb8-77adf30609f7",
       "name": "(Re-)Create backup folder"
     },
     {
@@ -96,12 +111,12 @@
         "filters": {},
         "requestOptions": {}
       },
-      "id": "8169bfcb-45e3-4091-bd96-142ccaca16b1",
+      "id": "0df71abc-0da7-46a4-9174-f3430867d975",
       "name": "Get Workflows1",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1344,
-        112
+        1632,
+        1040
       ],
       "typeVersion": 1,
       "credentials": {
@@ -118,16 +133,16 @@
         "options": {
           "format": true,
           "encoding": "utf8",
-          "fileName": "={{ (()=>{\n\nconst slugify = (text) => {\n  return text.toString()\n    .replace(/\\s+/g, '-')           // Replace spaces with -\n    .replace(/[^\\w\\-]+/g, '')       // Remove all non-word chars\n    .replace(/\\-\\-+/g, '-')         // Replace multiple - with single -\n    .replace(/^-+/, '')             // Trim - from start of text\n    .replace(/-+$/, '');            // Trim - from end of text\n}\n\nconst fileName = $json.name\n\nreturn `${slugify(fileName)}.json`\n})() }}"
+          "fileName": "={{ (()=>{\n\nconst slugify = (text) => {\n  return text.toString().toLowerCase()\n    .replace(/\\s+/g, '-')           // Replace spaces with -\n    .replace(/[^\\w\\-]+/g, '')       // Remove all non-word chars\n    .replace(/\\-\\-+/g, '-')         // Replace multiple - with single -\n    .replace(/^-+/, '')             // Trim - from start of text\n    .replace(/-+$/, '');            // Trim - from end of text\n}\n\nconst fileName = `${$json.name}_${$json.id}`\n\nreturn `${slugify(fileName)}.json`\n})() }}"
         }
       },
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        992,
-        336
+        1808,
+        1040
       ],
-      "id": "2a6853db-4957-4456-a71f-7b977e61465d",
+      "id": "74ce5f1b-5838-4da1-8b34-6787221fdba5",
       "name": "Convert to File"
     },
     {
@@ -139,10 +154,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1168,
-        336
+        1984,
+        1040
       ],
-      "id": "a5419bbd-e8d9-4986-90ee-89b81201fc0c",
+      "id": "d56538b0-3719-43b1-80f9-6b966bcd8605",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -158,10 +173,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1168,
-        -112
+        1456,
+        816
       ],
-      "id": "3c912dd1-b3b1-4d73-9fb9-1da0e8bf61f8",
+      "id": "7851f98b-a68a-4ddf-a69c-05c0d6c0c78a",
       "name": "Git - User Name"
     },
     {
@@ -174,10 +189,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1344,
-        560
+        1632,
+        1264
       ],
-      "id": "a2c5652c-131d-47c9-b655-ed5769c83786",
+      "id": "6646e4b6-718d-4f51-92e2-437b689ffb30",
       "name": "Git - Commit"
     },
     {
@@ -190,10 +205,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1520,
-        560
+        1808,
+        1264
       ],
-      "id": "616952eb-abe5-4afa-913c-85d8b3e2178a",
+      "id": "427eaef5-debd-485c-ac9f-fd779b47d55c",
       "name": "Git - Push",
       "credentials": {
         "gitPassword": {
@@ -210,11 +225,25 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1168,
-        800
+        1456,
+        1504
       ],
-      "id": "d27452be-0b8e-4f32-86d3-95ab279af65c",
+      "id": "eb9803ec-76aa-48e9-9fdd-23d679fa2ba3",
       "name": "Clean up"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1280,
+        1040
+      ],
+      "id": "145b0994-9868-44a1-9724-858986b42e85",
+      "name": "Continue - Backup Workflows"
     },
     {
       "parameters": {
@@ -227,10 +256,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1344,
-        -112
+        1632,
+        816
       ],
-      "id": "7d7301ec-3625-4511-99fa-804cb81ba009",
+      "id": "730980f2-ce5c-4b8f-b41c-2dc0833ff5fa",
       "name": "Git - User Email"
     },
     {
@@ -240,28 +269,28 @@
         "width": 1180,
         "color": 2
       },
-      "id": "1a5e8587-6536-4dd4-97d6-b657a055df2a",
+      "id": "9b6a61ed-b2b7-432f-9d36-1715ef1a6f02",
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        -160
+        1184,
+        768
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "### Retrieve, Filter, and Clean Workflows",
+        "content": "### Backup the workflows",
         "height": 220,
         "width": 1180,
         "color": 3
       },
-      "id": "0691b2fe-9c4a-4691-b61d-6f493549fe1d",
+      "id": "857a42e9-bb6a-4a2f-acc0-84b7b2d35cdb",
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        64
+        1184,
+        992
       ],
       "typeVersion": 1
     },
@@ -270,14 +299,14 @@
         "content": "### Commit & Push",
         "height": 220,
         "width": 1180,
-        "color": 5
+        "color": 4
       },
-      "id": "529d242f-3a06-4493-b48d-455ed4f90a8f",
+      "id": "0a7f8ba1-ea6e-448b-8724-b12c92296a91",
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        512
+        1184,
+        1216
       ],
       "typeVersion": 1
     },
@@ -286,14 +315,14 @@
         "content": "### Clean up the local folder",
         "height": 220,
         "width": 1180,
-        "color": 6
+        "color": 5
       },
-      "id": "c2c1b747-e8cd-450f-86c6-949aeafd20e7",
+      "id": "9c386972-e048-4b38-81b8-50086edf357d",
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        736
+        1184,
+        1440
       ],
       "typeVersion": 1
     },
@@ -304,12 +333,12 @@
         "width": 172,
         "color": 2
       },
-      "id": "e5bab717-738d-4694-9ea3-f5458da9a4be",
+      "id": "03d45348-f449-4e51-a97a-26b2476db9b9",
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        384,
-        -208
+        672,
+        720
       ],
       "typeVersion": 1
     },
@@ -322,10 +351,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1168,
-        560
+        1456,
+        1264
       ],
-      "id": "0608a8ac-575f-4989-9c4c-41101f11c0dc",
+      "id": "13b076d5-d8b6-4711-a055-3b646d481f44",
       "name": "Git"
     },
     {
@@ -336,10 +365,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        992,
-        560
+        1280,
+        1264
       ],
-      "id": "7730db08-1ffa-4492-a532-5a92ef53e0fb",
+      "id": "efbf8a4e-bfa7-41d5-bd44-fe9dba611e7c",
       "name": "Continue - Commit"
     },
     {
@@ -350,10 +379,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        992,
-        800
+        1280,
+        1504
       ],
-      "id": "cb66bd01-6158-4234-b401-48929cd3285b",
+      "id": "942a58a0-9886-4247-987b-88053c65c4e2",
       "name": "Continue - Clean up"
     },
     {
@@ -370,10 +399,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1344,
-        336
+        2160,
+        1040
       ],
-      "id": "4d12a226-68a8-4dce-861b-326c9b5c2c1c",
+      "id": "359249ca-a9d0-4aff-ad16-e595013461bf",
       "name": "Aggregate"
     },
     {
@@ -383,7 +412,7 @@
             {
               "id": "314eda1c-cc62-4430-8eeb-1aa5f0f3e8c0",
               "name": "config.repository",
-              "value": "https://github.com/your-username/n8n-workflows.git",
+              "value": "https://github.com/your-username/n8n-workflows-backup.git",
               "type": "string"
             },
             {
@@ -401,13 +430,13 @@
             {
               "id": "0af092ec-05a6-436e-b3b0-0a3aa060e633",
               "name": "config.git.name",
-              "value": "n8n Workflow OSS",
+              "value": "n8n Workflow Backup",
               "type": "string"
             },
             {
               "id": "836f121f-98aa-4313-99ce-e94a1e35f5dd",
               "name": "config.git.email",
-              "value": "n8n-workflow-oss@example.com",
+              "value": "n8n-workflow-backup@example.com",
               "type": "string"
             },
             {
@@ -422,154 +451,14 @@
           "dotNotation": true
         }
       },
-      "id": "bb0f38b1-90fc-48e0-ab22-04d08fd7ea8f",
+      "id": "2ab11b64-2b55-4837-8ce0-07fc2291a82a",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        416,
-        -112
+        704,
+        816
       ],
       "typeVersion": 3.4
-    },
-    {
-      "parameters": {
-        "mode": "chooseBranch",
-        "useDataOfInput": 2
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        992,
-        112
-      ],
-      "id": "580d7842-a103-4a2f-b8a5-2c512078f0a2",
-      "name": "Continue - Retrieve, Filter, and Clean Workflows"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "a125072a-9e63-4185-aaa5-b1b3b71a6a7f",
-              "leftValue": "={{ $json.tags.map(tag => tag.name) }}",
-              "rightValue": "public",
-              "operator": {
-                "type": "array",
-                "operation": "contains",
-                "rightType": "any"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.filter",
-      "typeVersion": 2.2,
-      "position": [
-        1520,
-        112
-      ],
-      "id": "90c9e7bf-9d2d-4c6c-8688-d614241da5b0",
-      "name": "Keep 'public'"
-    },
-    {
-      "parameters": {
-        "content": "### Create Files",
-        "height": 220,
-        "width": 1180,
-        "color": 4
-      },
-      "id": "5bf018a4-9930-4b56-9317-e9145f3a0f6d",
-      "name": "Sticky Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        896,
-        288
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "5bdbcac6-9f20-4e33-bfb8-cb11b59e84ab",
-              "name": "name",
-              "value": "={{ $json.name }}",
-              "type": "string"
-            },
-            {
-              "id": "a906c40d-c7ef-437c-80f7-e1772cffdaba",
-              "name": "settings",
-              "value": "={{ $json.settings }}",
-              "type": "object"
-            },
-            {
-              "id": "9d34bd87-004e-44fe-b25d-fcfa72297d1b",
-              "name": "versionId",
-              "value": "={{ $json.versionId }}",
-              "type": "string"
-            },
-            {
-              "id": "37f70ad2-c7d9-4bff-9b35-22108a670598",
-              "name": "nodes",
-              "value": "={{ $json.nodes }}",
-              "type": "array"
-            },
-            {
-              "id": "b4b0aa76-05e8-4290-a904-449c4c58a980",
-              "name": "connections",
-              "value": "={{ $json.connections }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1712,
-        112
-      ],
-      "id": "f5aada04-6d8e-402b-856f-d8b2a83bb268",
-      "name": "Clear unnecessary properties"
-    },
-    {
-      "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "const anonymize = (text) => text\n  // replace email domains\n  .replace(/(?<=@)[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g, \"example.com\")\n  // replace GitHub usernames\n  .replace(/github\\.com\\/[^/]+\\//g, \"github.com/your-username/\");\n\nconst jsonText = JSON.stringify($json)\nconst anonymized = anonymize(jsonText)\n\nconsole.log({jsonText, anonymized}) \n  \ntry {\n  return JSON.parse(anonymized);\n} catch (err) {\n  console.error(\"Invalid JSON string:\", err);\n  throw err\n}"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1904,
-        112
-      ],
-      "id": "606c4822-7ff8-46b6-b0be-5cd669e072f1",
-      "name": "Anonymise"
-    },
-    {
-      "parameters": {
-        "content": "# 🚀 Publish My Workflows\n\n## 📋 Description\n\nThis workflow automatically backs up and publishes your n8n workflows to GitHub, making them open-source and shareable with the community.\n\n## ⚙️ How It Works\n\n1. **Scheduled Execution** - Runs daily at 23:55\n2. **Workflow Retrieval** - Fetches all workflows from your n8n instance\n3. **Filtering** - Only processes workflows tagged with `public`\n4. **Anonymization** - Removes sensitive information (email domains, GitHub usernames)\n5. **Git Sync** - Commits and pushes workflow JSON files to your GitHub repository\n6. **Cleanup** - Removes temporary files after successful upload\n\n## 📦 What Gets Published\n\nEach published workflow includes:\n- Workflow nodes and connections\n- Settings and configuration\n- Version information\n- Workflow name (slugified as filename)\n\n## 🔒 Privacy & Security\n\n- Only workflows explicitly tagged as `public` are published\n- Sensitive data is automatically anonymized before publishing\n- Credentials and API keys are excluded from exports\n\n## 🛠️ Configuration\n\nUpdate the **Config** node to customize:\n- Target GitHub repository URL\n- Git commit author name and email\n- Subfolder path for workflow files\n- Whether to delete old workflows before backing up\n\n## 📬 Contact\n\nFor questions, suggestions, or contributions:\n- **GitHub**: [mekanics](https://github.com/your-username/n8n-workflows)\n- **Issues**: Report bugs or request features on the GitHub repository\n\n---\n\n*Perfect for sharing your automation templates with the n8n community!* ✨",
-        "height": 1176,
-        "width": 656
-      },
-      "id": "294c5167-1f3a-478d-91a5-509c109c1a3a",
-      "name": "Sticky Note3",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -560,
-        -288
-      ],
-      "typeVersion": 1
     }
   ],
   "connections": {
@@ -599,6 +488,11 @@
       "main": [
         [
           {
+            "node": "Continue - Backup Workflows",
+            "type": "main",
+            "index": 1
+          },
+          {
             "node": "Clone Backup Repo",
             "type": "main",
             "index": 0
@@ -610,11 +504,6 @@
           },
           {
             "node": "Continue - Commit",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "Continue - Retrieve, Filter, and Clean Workflows",
             "type": "main",
             "index": 1
           }
@@ -636,7 +525,7 @@
       "main": [
         [
           {
-            "node": "Keep 'public'",
+            "node": "Convert to File",
             "type": "main",
             "index": 0
           }
@@ -698,11 +587,22 @@
         ]
       ]
     },
+    "Continue - Backup Workflows": {
+      "main": [
+        [
+          {
+            "node": "(Re-)Create backup folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Git - User Email": {
       "main": [
         [
           {
-            "node": "Continue - Retrieve, Filter, and Clean Workflows",
+            "node": "Continue - Backup Workflows",
             "type": "main",
             "index": 0
           }
@@ -758,50 +658,6 @@
         [
           {
             "node": "Enrich Config (generated)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Continue - Retrieve, Filter, and Clean Workflows": {
-      "main": [
-        [
-          {
-            "node": "(Re-)Create backup folder",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Keep 'public'": {
-      "main": [
-        [
-          {
-            "node": "Clear unnecessary properties",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Clear unnecessary properties": {
-      "main": [
-        [
-          {
-            "node": "Anonymise",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Anonymise": {
-      "main": [
-        [
-          {
-            "node": "Convert to File",
             "type": "main",
             "index": 0
           }
