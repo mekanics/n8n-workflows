@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "111af296-d073-4acb-b8d1-15890a4dfc1d",
+  "versionId": "a902f635-1fc9-41d8-803d-c72303e1bcc3",
   "nodes": [
     {
       "parameters": {
@@ -169,7 +169,7 @@
       "parameters": {
         "operation": "commit",
         "repositoryPath": "={{ $('Continue - Commit').item.json.config.localRepoPath }}",
-        "message": "Update and publish workflows",
+        "message": "=Backup {{ DateTime.now().toISO() }}",
         "options": {}
       },
       "type": "n8n-nodes-base.git",
