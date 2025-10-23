@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "17e92f0d-7ba0-47ac-ae6d-deb682088a9d",
+  "versionId": "6b4f003d-4c85-4f18-b787-a07416f73344",
   "nodes": [
     {
       "parameters": {
@@ -285,7 +285,7 @@
             {
               "id": "314eda1c-cc62-4430-8eeb-1aa5f0f3e8c0",
               "name": "config.repository",
-              "value": "https://github.com/your-username/n8n-workflows-backups.git",
+              "value": "https://github.com/your-username/n8n-workflows-backup.git",
               "type": "string"
             },
             {
@@ -349,8 +349,8 @@
     },
     {
       "parameters": {
-        "content": "## 🧠 Daily Workflow Backups to Git Repo\n\nThis n8n workflow automatically backs up all your existing workflows to a Git repository on a scheduled basis.\nIt ensures version control, safe storage, and easy rollback of your n8n configurations.\n\n### ⚙️ How It Works\n1. Trigger\n   - Runs on a schedule (daily or as configured in the Schedule Trigger node).\n2. Configuration\n   - Defines key backup parameters:\n      - Git repository URL\n      - Local temporary path (/tmp/...)\n      - Subfolder name\n      - Option to delete old workflows before backup\n3. Git Setup\n   - Clones the remote repository\n   - Sets Git username and email for commits\n   - Prepares the local folder for storing exported workflows\n4. Backup Process\n   - Fetches all n8n workflows via API\n   - Converts each workflow into a formatted JSON file\n   - Writes the files to the designated backup folder\n5. Commit & Push\n   - Adds all workflow files to Git\n   - Commits changes with a timestamped message\n   - Pushes the updates to the remote repository\n6. Cleanup\n   - Removes the temporary local repository folder after a successful push\n\n### 🔗 Links\n- GitHub folder for backups:  [mekanics/n8n-workflows-backup](https://github.com/mekanics/n8n-workflows-backup)\n\n### 📇 Contact\n- [Github](https://github.com/mekanics)\n- [LinkedIn](https://www.linkedin.com/in/jolyalexandre/)\n",
-        "height": 888,
+        "content": "## 🧠 Daily Workflow Backups to Git Repo\n\nThis n8n workflow automatically backs up all your existing workflows to a Git repository on a scheduled basis.\nIt ensures version control, safe storage, and easy rollback of your n8n configurations.\n\n### ⚠️ Requirements\n\nThis workflow requires the `fs` (filesystem) module to be enabled in n8n. Set the following environment variable:\n\n```bash\nexport NODE_FUNCTION_ALLOW_BUILTIN=fs\n```\n\nFor more information, see: https://docs.n8n.io/hosting/configuration/configuration-examples/modules-in-code-node/\n\n### ⚙️ How It Works\n1. Trigger\n   - Runs on a schedule (daily or as configured in the Schedule Trigger node).\n2. Configuration\n   - Defines key backup parameters:\n      - Git repository URL\n      - Local temporary path (/tmp/...)\n      - Subfolder name\n      - Option to delete old workflows before backup\n3. Git Setup\n   - Clones the remote repository\n   - Sets Git username and email for commits\n   - Prepares the local folder for storing exported workflows\n4. Backup Process\n   - Fetches all n8n workflows via API\n   - Converts each workflow into a formatted JSON file\n   - Writes the files to the designated backup folder\n5. Commit & Push\n   - Adds all workflow files to Git\n   - Commits changes with a timestamped message\n   - Pushes the updates to the remote repository\n6. Cleanup\n   - Removes the temporary local repository folder after a successful push\n\n### 🔗 Links\n- GitHub folder for backups:  [mekanics/n8n-workflows-backup](https://github.com/mekanics/n8n-workflows-backup)\n\n### 📇 Contact\n- [Github](https://github.com/mekanics)\n- [LinkedIn](https://www.linkedin.com/in/jolyalexandre/)\n",
+        "height": 1128,
         "width": 656
       },
       "id": "3803f1ca-9296-46ce-8e35-01d8c5f9812c",

@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "16a038f5-baec-435e-bf8c-06d4113b4db7",
+  "versionId": "9e9eed6a-0b62-4e14-abc2-c044d47ff99c",
   "nodes": [
     {
       "parameters": {
@@ -15,6 +15,10 @@
             {
               "triggerAtHour": 23,
               "triggerAtMinute": 55
+            },
+            {
+              "triggerAtHour": 8,
+              "triggerAtMinute": 29
             }
           ]
         }
@@ -540,8 +544,8 @@
     },
     {
       "parameters": {
-        "content": "# 🚀 Publish My Workflows\n\n## 📋 Description\n\nThis workflow automatically backs up and publishes your n8n workflows to GitHub, making them open-source and shareable with the community.\n\n## ⚙️ How It Works\n\n1. **Scheduled Execution** - Runs daily at 23:55\n2. **Workflow Retrieval** - Fetches all workflows from your n8n instance\n3. **Filtering** - Only processes workflows tagged with `public`\n4. **Anonymization** - Removes sensitive information (email domains, GitHub usernames)\n5. **Git Sync** - Commits and pushes workflow JSON files to your GitHub repository\n6. **Cleanup** - Removes temporary files after successful upload\n\n## 📦 What Gets Published\n\nEach published workflow includes:\n- Workflow nodes and connections\n- Settings and configuration\n- Version information\n- Workflow name (slugified as filename)\n\n## 🔒 Privacy & Security\n\n- Only workflows explicitly tagged as `public` are published\n- Sensitive data is automatically anonymized before publishing\n- Credentials and API keys are excluded from exports\n\n## 🛠️ Configuration\n\nUpdate the **Config** node to customize:\n- Target GitHub repository URL\n- Git commit author name and email\n- Subfolder path for workflow files\n- Whether to delete old workflows before backing up\n\n## 📬 Contact\n\nFor questions, suggestions, or contributions:\n- **GitHub**: [mekanics](https://github.com/mekanics/n8n-workflows)\n- **Issues**: Report bugs or request features on the GitHub repository\n",
-        "height": 1112,
+        "content": "# 🚀 Publish My Workflows\n\n## 📋 Description\n\nThis workflow automatically backs up and publishes your n8n workflows to GitHub, making them open-source and shareable with the community.\n\n## ⚠️ Requirements\n\nThis workflow requires the `fs` (filesystem) module to be enabled in n8n. Set the following environment variable:\n\n```bash\nexport NODE_FUNCTION_ALLOW_BUILTIN=fs\n```\n\nFor more information, see: https://docs.n8n.io/hosting/configuration/configuration-examples/modules-in-code-node/\n\n## ⚙️ How It Works\n\n1. **Scheduled Execution** - Runs daily at 23:55\n2. **Workflow Retrieval** - Fetches all workflows from your n8n instance\n3. **Filtering** - Only processes workflows tagged with `public`\n4. **Anonymization** - Removes sensitive information (email domains, GitHub usernames)\n5. **Git Sync** - Commits and pushes workflow JSON files to your GitHub repository\n6. **Cleanup** - Removes temporary files after successful upload\n\n## 📦 What Gets Published\n\nEach published workflow includes:\n- Workflow nodes and connections\n- Settings and configuration\n- Version information\n- Workflow name (slugified as filename)\n\n## 🔒 Privacy & Security\n\n- Only workflows explicitly tagged as `public` are published\n- Sensitive data is automatically anonymized before publishing\n- Credentials and API keys are excluded from exports\n\n## 🛠️ Configuration\n\nUpdate the **Config** node to customize:\n- Target GitHub repository URL\n- Git commit author name and email\n- Subfolder path for workflow files\n- Whether to delete old workflows before backing up\n\n## 📬 Contact\n\nFor questions, suggestions, or contributions:\n- **GitHub**: [mekanics](https://github.com/mekanics/n8n-workflows)\n- **Issues**: Report bugs or request features on the GitHub repository\n",
+        "height": 1384,
         "width": 656
       },
       "id": "294c5167-1f3a-478d-91a5-509c109c1a3a",
