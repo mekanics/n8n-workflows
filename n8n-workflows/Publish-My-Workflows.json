@@ -6,7 +6,7 @@
     "errorWorkflow": "TwTEUymppwPwLnZI",
     "timeSavedPerExecution": 2
   },
-  "versionId": "9e9eed6a-0b62-4e14-abc2-c044d47ff99c",
+  "versionId": "26f5de5c-c02e-4333-bb3d-f9a11faec478",
   "nodes": [
     {
       "parameters": {
@@ -15,10 +15,6 @@
             {
               "triggerAtHour": 23,
               "triggerAtMinute": 55
-            },
-            {
-              "triggerAtHour": 8,
-              "triggerAtMinute": 29
             }
           ]
         }
