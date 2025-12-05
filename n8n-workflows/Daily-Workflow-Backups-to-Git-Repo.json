@@ -1,12 +1,9 @@
 {
   "name": "Daily Workflow Backups to Git Repo",
   "settings": {
-    "callerPolicy": "workflowsFromSameOwner",
-    "executionOrder": "v1",
-    "errorWorkflow": "TwTEUymppwPwLnZI",
-    "timeSavedPerExecution": 2
+    "executionOrder": "v1"
   },
-  "versionId": "6b4f003d-4c85-4f18-b787-a07416f73344",
+  "versionId": "afd552d8-283e-4759-8b67-2aa6d16168c7",
   "nodes": [
     {
       "parameters": {
@@ -19,12 +16,12 @@
           ]
         }
       },
-      "id": "ecb7924b-23f3-480d-aede-79edaa55be2a",
+      "id": "98a25c88-dbcb-4aa8-80be-236dabd6e0fc",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        480,
-        816
+        704,
+        96
       ],
       "typeVersion": 1.2
     },
@@ -38,10 +35,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1280,
-        816
+        1504,
+        96
       ],
-      "id": "ec5c0caf-f635-4b27-9c79-45b046bc3a97",
+      "id": "83cd1ef5-7505-40e7-9879-b668908ac5ac",
       "name": "Clone Backup Repo",
       "alwaysOutputData": false
     },
@@ -65,10 +62,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        928,
-        816
+        1152,
+        96
       ],
-      "id": "e133436d-6adb-4e54-a4c5-b125eff94a85",
+      "id": "e48906a8-3640-44f4-93e7-da0995dfcfd6",
       "name": "Enrich Config (generated)"
     },
     {
@@ -76,12 +73,12 @@
         "filters": {},
         "requestOptions": {}
       },
-      "id": "0df71abc-0da7-46a4-9174-f3430867d975",
+      "id": "6e28b1ad-5eea-4c92-98ac-2f3b12da47ad",
       "name": "Get Workflows1",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1632,
-        1040
+        1856,
+        320
       ],
       "typeVersion": 1
     },
@@ -98,10 +95,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1808,
-        1040
+        2032,
+        320
       ],
-      "id": "74ce5f1b-5838-4da1-8b34-6787221fdba5",
+      "id": "9d8261b1-7f5b-4146-a237-c7cef51c069b",
       "name": "Convert to File"
     },
     {
@@ -113,10 +110,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1984,
-        1040
+        2208,
+        320
       ],
-      "id": "d56538b0-3719-43b1-80f9-6b966bcd8605",
+      "id": "a13f4219-b044-420e-a89a-aef4d17c48e5",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -132,10 +129,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1456,
-        816
+        1680,
+        96
       ],
-      "id": "7851f98b-a68a-4ddf-a69c-05c0d6c0c78a",
+      "id": "bccc98c0-3e34-415f-8e90-80496041ae1b",
       "name": "Git - User Name"
     },
     {
@@ -148,10 +145,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1632,
-        1264
+        1856,
+        544
       ],
-      "id": "6646e4b6-718d-4f51-92e2-437b689ffb30",
+      "id": "2fe5e36e-ea48-4733-b69f-c1b2ee2478b2",
       "name": "Git - Commit"
     },
     {
@@ -164,10 +161,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1808,
-        1264
+        2032,
+        544
       ],
-      "id": "427eaef5-debd-485c-ac9f-fd779b47d55c",
+      "id": "2f21288a-3770-47b2-966d-54883920487c",
       "name": "Git - Push"
     },
     {
@@ -178,10 +175,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1456,
-        1504
+        1680,
+        784
       ],
-      "id": "eb9803ec-76aa-48e9-9fdd-23d679fa2ba3",
+      "id": "1ce21692-acc4-45ae-ba35-f9ff3622a660",
       "name": "Clean up"
     },
     {
@@ -192,10 +189,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1280,
-        1040
+        1504,
+        320
       ],
-      "id": "145b0994-9868-44a1-9724-858986b42e85",
+      "id": "08e305f7-f442-4279-8a9c-dcdd33329346",
       "name": "Continue - Backup Workflows"
     },
     {
@@ -209,10 +206,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1632,
-        816
+        1856,
+        96
       ],
-      "id": "730980f2-ce5c-4b8f-b41c-2dc0833ff5fa",
+      "id": "1c1dc6fa-9fa9-41a1-8cf7-f04c84cd2911",
       "name": "Git - User Email"
     },
     {
@@ -224,10 +221,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1456,
-        1264
+        1680,
+        544
       ],
-      "id": "13b076d5-d8b6-4711-a055-3b646d481f44",
+      "id": "03f8a4fc-1fa1-4e18-96bc-6570409dd914",
       "name": "Git"
     },
     {
@@ -238,10 +235,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1280,
-        1264
+        1504,
+        544
       ],
-      "id": "efbf8a4e-bfa7-41d5-bd44-fe9dba611e7c",
+      "id": "66803122-980a-4f06-bf59-a227f83bda0b",
       "name": "Continue - Commit"
     },
     {
@@ -252,10 +249,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1280,
-        1504
+        1504,
+        784
       ],
-      "id": "942a58a0-9886-4247-987b-88053c65c4e2",
+      "id": "5f85a018-9d7b-474b-942c-1153de12d55d",
       "name": "Continue - Clean up"
     },
     {
@@ -272,10 +269,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        2160,
-        1040
+        2384,
+        320
       ],
-      "id": "359249ca-a9d0-4aff-ad16-e595013461bf",
+      "id": "09cc5483-0dc5-420f-a132-a33add0164da",
       "name": "Aggregate"
     },
     {
@@ -324,12 +321,12 @@
           "dotNotation": true
         }
       },
-      "id": "2ab11b64-2b55-4837-8ce0-07fc2291a82a",
+      "id": "ca00cf4f-f415-4912-9f61-6b7fd20da5e9",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        704,
-        816
+        928,
+        96
       ],
       "typeVersion": 3.4
     },
@@ -341,10 +338,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1456,
-        1040
+        1680,
+        320
       ],
-      "id": "323a801a-be1e-4dfb-bbb8-77adf30609f7",
+      "id": "f8686350-58db-4c5c-8b90-a6bc9a2a8beb",
       "name": "(Re-)Create backup folder"
     },
     {
@@ -353,12 +350,12 @@
         "height": 1128,
         "width": 656
       },
-      "id": "3803f1ca-9296-46ce-8e35-01d8c5f9812c",
+      "id": "cb1aeb02-5e37-4615-bb70-d2c8629bad01",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -224,
-        720
+        0,
+        0
       ],
       "typeVersion": 1
     },
@@ -369,12 +366,12 @@
         "width": 1180,
         "color": 2
       },
-      "id": "9b6a61ed-b2b7-432f-9d36-1715ef1a6f02",
+      "id": "e431786d-f388-46d1-908a-69839a641fa2",
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1184,
-        768
+        1408,
+        48
       ],
       "typeVersion": 1
     },
@@ -385,12 +382,12 @@
         "width": 1180,
         "color": 3
       },
-      "id": "857a42e9-bb6a-4a2f-acc0-84b7b2d35cdb",
+      "id": "9d422fa2-885e-489f-a64f-6a5ca85dd48b",
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1184,
-        992
+        1408,
+        272
       ],
       "typeVersion": 1
     },
@@ -401,12 +398,12 @@
         "width": 1180,
         "color": 4
       },
-      "id": "0a7f8ba1-ea6e-448b-8724-b12c92296a91",
+      "id": "5382eab7-74cb-4414-8681-2fa27cb29dd8",
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1184,
-        1216
+        1408,
+        496
       ],
       "typeVersion": 1
     },
@@ -417,12 +414,12 @@
         "width": 1180,
         "color": 5
       },
-      "id": "9c386972-e048-4b38-81b8-50086edf357d",
+      "id": "e965ba68-6af4-40bd-84f6-8a84a9c3bfd4",
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1184,
-        1440
+        1408,
+        720
       ],
       "typeVersion": 1
     },
@@ -433,12 +430,12 @@
         "width": 172,
         "color": 2
       },
-      "id": "03d45348-f449-4e51-a97a-26b2476db9b9",
+      "id": "06516dea-87c1-424c-88c0-cda04aba95c1",
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        672,
-        720
+        896,
+        0
       ],
       "typeVersion": 1
     }

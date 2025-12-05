@@ -3,10 +3,11 @@
   "settings": {
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "TwTEUymppwPwLnZI",
-    "timeSavedPerExecution": 2
+    "availableInMCP": false,
+    "errorWorkflow": "0Xi540BzrXpZrpTj",
+    "timeSavedPerExecution": 3
   },
-  "versionId": "26f5de5c-c02e-4333-bb3d-f9a11faec478",
+  "versionId": "87adf261-0b5e-4348-bf7a-cc7a60e62988",
   "nodes": [
     {
       "parameters": {
@@ -19,12 +20,12 @@
           ]
         }
       },
-      "id": "48eda0ee-8ef1-4170-a814-41f19344d304",
+      "id": "037a154d-bd0c-43b4-9b55-766057fbcc40",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        192,
-        -112
+        752,
+        176
       ],
       "typeVersion": 1.2
     },
@@ -38,10 +39,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        992,
-        -112
+        1552,
+        176
       ],
-      "id": "34011336-c5dc-4e8e-a430-93cf279fe36c",
+      "id": "4db06f4a-b984-4fcf-b789-1a26c700b7cd",
       "name": "Clone Backup Repo",
       "alwaysOutputData": false
     },
@@ -65,10 +66,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        640,
-        -112
+        1200,
+        176
       ],
-      "id": "9977507c-233d-4544-8d86-5abe1eb5638d",
+      "id": "e6bcd318-b428-4229-bc89-e431c43e875e",
       "name": "Enrich Config (generated)"
     },
     {
@@ -84,10 +85,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        992,
-        336
+        1552,
+        624
       ],
-      "id": "2a6853db-4957-4456-a71f-7b977e61465d",
+      "id": "2e145402-eec7-473e-a28f-8d68e6a791e4",
       "name": "Convert to File"
     },
     {
@@ -99,10 +100,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1168,
-        336
+        1728,
+        624
       ],
-      "id": "a5419bbd-e8d9-4986-90ee-89b81201fc0c",
+      "id": "893d637c-d579-4aca-97db-dc61fcde328a",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -118,10 +119,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1168,
-        -112
+        1728,
+        176
       ],
-      "id": "3c912dd1-b3b1-4d73-9fb9-1da0e8bf61f8",
+      "id": "863d18ff-8322-44dd-b9b8-7ea3b2d19168",
       "name": "Git - User Name"
     },
     {
@@ -134,10 +135,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1344,
-        560
+        1904,
+        848
       ],
-      "id": "a2c5652c-131d-47c9-b655-ed5769c83786",
+      "id": "cb0cbbba-396a-473f-9f7a-bb3f3fdf1856",
       "name": "Git - Commit"
     },
     {
@@ -150,10 +151,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1520,
-        560
+        2080,
+        848
       ],
-      "id": "616952eb-abe5-4afa-913c-85d8b3e2178a",
+      "id": "de27197c-655b-4368-89fe-1034a0f3e1d7",
       "name": "Git - Push"
     },
     {
@@ -164,10 +165,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1168,
-        800
+        1728,
+        1088
       ],
-      "id": "d27452be-0b8e-4f32-86d3-95ab279af65c",
+      "id": "dee49773-a8cc-4345-b2e5-38aaa68672b8",
       "name": "Clean up"
     },
     {
@@ -181,10 +182,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1344,
-        -112
+        1904,
+        176
       ],
-      "id": "7d7301ec-3625-4511-99fa-804cb81ba009",
+      "id": "96c5bd97-a746-4eaa-8852-58ba72651449",
       "name": "Git - User Email"
     },
     {
@@ -196,10 +197,10 @@
       "type": "n8n-nodes-base.git",
       "typeVersion": 1,
       "position": [
-        1168,
-        560
+        1728,
+        848
       ],
-      "id": "0608a8ac-575f-4989-9c4c-41101f11c0dc",
+      "id": "87cfeb6a-454b-4574-a9f0-3915394e3291",
       "name": "Git"
     },
     {
@@ -210,10 +211,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        992,
-        560
+        1552,
+        848
       ],
-      "id": "7730db08-1ffa-4492-a532-5a92ef53e0fb",
+      "id": "9afa6f01-c56a-4c79-ae2e-ffd76c4a4bee",
       "name": "Continue - Commit"
     },
     {
@@ -224,10 +225,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        992,
-        800
+        1552,
+        1088
       ],
-      "id": "cb66bd01-6158-4234-b401-48929cd3285b",
+      "id": "ea8c8e80-042b-404e-92a9-169c9c15d515",
       "name": "Continue - Clean up"
     },
     {
@@ -244,10 +245,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1344,
-        336
+        1904,
+        624
       ],
-      "id": "4d12a226-68a8-4dce-861b-326c9b5c2c1c",
+      "id": "5a6a72b0-d797-4f09-b5a9-f13a7d744dbc",
       "name": "Aggregate"
     },
     {
@@ -296,12 +297,12 @@
           "dotNotation": true
         }
       },
-      "id": "bb0f38b1-90fc-48e0-ab22-04d08fd7ea8f",
+      "id": "deefa601-6c58-476b-94c8-f780ec4ea87f",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        416,
-        -112
+        976,
+        176
       ],
       "typeVersion": 3.4
     },
@@ -313,10 +314,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        992,
-        112
+        1552,
+        400
       ],
-      "id": "580d7842-a103-4a2f-b8a5-2c512078f0a2",
+      "id": "58f2cf89-2661-4222-a070-47355c829895",
       "name": "Continue - Retrieve, Filter, and Clean Workflows"
     },
     {
@@ -347,10 +348,10 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        1520,
-        112
+        2080,
+        400
       ],
-      "id": "90c9e7bf-9d2d-4c6c-8688-d614241da5b0",
+      "id": "a4cd2be5-6839-4393-939e-d9a09fd9e83a",
       "name": "Keep 'public'"
     },
     {
@@ -394,10 +395,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1712,
-        112
+        2272,
+        400
       ],
-      "id": "f5aada04-6d8e-402b-856f-d8b2a83bb268",
+      "id": "2c32da07-ddfa-4914-be07-9818487728f1",
       "name": "Clear unnecessary properties"
     },
     {
@@ -408,10 +409,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1904,
-        112
+        2464,
+        400
       ],
-      "id": "606c4822-7ff8-46b6-b0be-5cd669e072f1",
+      "id": "7b5d01e8-8f15-461d-a34a-aba5e32d3e48",
       "name": "Anonymise"
     },
     {
@@ -422,10 +423,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1168,
-        112
+        1728,
+        400
       ],
-      "id": "6a2d4c0b-3b15-4f01-b9ef-44d017a7c190",
+      "id": "81db518b-3fce-459e-9664-2eda178065e3",
       "name": "(Re-)Create workflow folder"
     },
     {
@@ -433,12 +434,12 @@
         "filters": {},
         "requestOptions": {}
       },
-      "id": "8169bfcb-45e3-4091-bd96-142ccaca16b1",
+      "id": "88af3c17-a026-4f87-95fa-e5e940b32134",
       "name": "Get Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1344,
-        112
+        1904,
+        400
       ],
       "typeVersion": 1
     },
@@ -449,12 +450,12 @@
         "width": 1180,
         "color": 2
       },
-      "id": "1a5e8587-6536-4dd4-97d6-b657a055df2a",
+      "id": "aa367c3d-b48c-4145-af97-629f00b399d6",
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        -160
+        1456,
+        128
       ],
       "typeVersion": 1
     },
@@ -465,12 +466,12 @@
         "width": 1180,
         "color": 3
       },
-      "id": "0691b2fe-9c4a-4691-b61d-6f493549fe1d",
+      "id": "6de83534-1417-4f8b-a752-1eb498f8ca65",
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        64
+        1456,
+        352
       ],
       "typeVersion": 1
     },
@@ -481,12 +482,12 @@
         "width": 1180,
         "color": 5
       },
-      "id": "529d242f-3a06-4493-b48d-455ed4f90a8f",
+      "id": "0e766821-db95-45c9-b87d-1ff33d312b90",
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        512
+        1456,
+        800
       ],
       "typeVersion": 1
     },
@@ -497,12 +498,12 @@
         "width": 1180,
         "color": 6
       },
-      "id": "c2c1b747-e8cd-450f-86c6-949aeafd20e7",
+      "id": "2da8c327-369a-48ac-ab6e-7f7e85ba04d3",
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        736
+        1456,
+        1024
       ],
       "typeVersion": 1
     },
@@ -513,12 +514,12 @@
         "width": 172,
         "color": 2
       },
-      "id": "e5bab717-738d-4694-9ea3-f5458da9a4be",
+      "id": "7cbdf344-59d9-406b-9700-2500d89069f6",
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        384,
-        -208
+        944,
+        80
       ],
       "typeVersion": 1
     },
@@ -529,12 +530,12 @@
         "width": 1180,
         "color": 4
       },
-      "id": "5bf018a4-9930-4b56-9317-e9145f3a0f6d",
+      "id": "6790f63b-9c3e-4e7e-b0b8-e56516fe2c1d",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        288
+        1456,
+        576
       ],
       "typeVersion": 1
     },
@@ -544,12 +545,12 @@
         "height": 1384,
         "width": 656
       },
-      "id": "294c5167-1f3a-478d-91a5-509c109c1a3a",
+      "id": "64d31f09-82a3-41d3-88e6-817ead16624d",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -560,
-        -288
+        0,
+        0
       ],
       "typeVersion": 1
     }
