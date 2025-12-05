@@ -3,12 +3,12 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "2f31896f-70a2-48d4-a693-7aed257f49ae",
+  "versionId": "18b7f27d-e26c-4730-9f01-ba1951e186c4",
   "nodes": [
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "={\n  \"projectId\": 42773279,\n\n  \"hoursPerWorkday\": 8.4,\n  \n  \"workingDays\": {\n    \"1\": 20,\n    \"2\": 20,\n    \"3\": 22,\n    \"4\": 20,\n    \"5\": 18,\n    \"6\": 22,\n    \"7\": 23,\n    \"8\": 21,\n    \"9\": 22,\n    \"10\": 22,\n    \"11\": 21,\n    \"12\": 18\n  },\n  \"totalWorkingDays\": 249,\n  \n  \"emailTo\": \"alex@mekanics.ch\",\n  \"emailFrom\": \"noreply@mekanics.ch\"\n}",
+        "jsonOutput": "={\n  \"projectId\": 1234567,\n\n  \"hoursPerWorkday\": 8.4,\n  \n  \"workingDays\": {\n    \"1\": 20,\n    \"2\": 20,\n    \"3\": 22,\n    \"4\": 20,\n    \"5\": 18,\n    \"6\": 22,\n    \"7\": 23,\n    \"8\": 21,\n    \"9\": 22,\n    \"10\": 22,\n    \"11\": 21,\n    \"12\": 18\n  },\n  \"totalWorkingDays\": 249,\n  \n  \"emailTo\": \"you@example.com\",\n  \"emailFrom\": \"noreply@example.com\"\n}",
         "options": {}
       },
       "id": "dc3fb886-6b84-455c-bf7c-e989f5d3c8b1",
