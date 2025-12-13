@@ -1,0 +1,79 @@
+{
+  "name": "Cron - Last Working Day of Month",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7c380575-ff1e-40fc-b9dc-169000a66ed9",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 19 * * 1-5"
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        -544,
+        -112
+      ],
+      "id": "50ae7154-df5a-43e3-b423-c818657d4fac",
+      "notesInFlow": true,
+      "notes": "Every Week Day at 19:00"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -112
+      ],
+      "id": "5995fcc6-3a3b-42ad-a222-afbc58df16aa",
+      "name": "Your Workflow"
+    },
+    {
+      "parameters": {
+        "functionCode": "function isLastWorkingDay() {\n  const today = DateTime.now()\n  const day = today.day\n  const lastDay = today.endOf('month').day\n\n  // Check if today is a weekend\n  if (today.weekday > 5) return []\n  \n  // If today is the last day of month and a weekday\n  if (day === lastDay) {\n    return [{\n      json: {\n        message: 'Today is the last weekday of the month',\n        date: today.toISO(),\n        dayOfMonth: day,\n        lastDayOfMonth: lastDay\n      }\n    }];\n  }\n  \n  // Check if remaining days are all weekend days\n  let current = today.plus({ days: 1 });\n  while (current.month === today.month) {\n    if (current.weekday <= 5) return [];\n    current = current.plus({ days: 1 });\n  }\n  \n  return [{\n    json: {\n      message: 'Today is the last weekday of the month',\n      date: today.toISO(),\n      dayOfMonth: day,\n      lastDayOfMonth: lastDay\n    }\n  }];\n}\n\nreturn isLastWorkingDay()"
+      },
+      "name": "Check Last Working Day",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -112
+      ],
+      "id": "81d41d04-6cbe-4f4f-a41b-1c64ed5ff886"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Check Last Working Day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Last Working Day": {
+      "main": [
+        [
+          {
+            "node": "Your Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
