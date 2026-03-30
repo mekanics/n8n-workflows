@@ -5,7 +5,9 @@
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false,
     "errorWorkflow": "0Xi540BzrXpZrpTj",
-    "timeSavedPerExecution": 3
+    "timeSavedPerExecution": 3,
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed"
   },
   "versionId": "ecd4acc5-c40d-4485-a32b-dee6f71aaa21",
   "nodes": [
