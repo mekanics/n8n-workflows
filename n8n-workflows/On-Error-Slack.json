@@ -1,0 +1,57 @@
+{
+  "name": "On Error – Slack",
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e7864bd3-3739-40f7-adc0-0e1ab2a947ae",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b5b132f3-93c6-4b24-ad1f-a80fd0096ae2",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0AKBPLBYAY",
+          "mode": "list",
+          "cachedResultName": "the-dark-side"
+        },
+        "text": "=🚨 An error occurred in n8n  {{ $json.workflow.name }} \n\nError Message:  {{ $json.execution.error.message }} \nWorkflow: {{ $json.execution.url }} \nExecution Id: {{ $json.execution.id }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.7,
+      "position": [
+        272,
+        0
+      ],
+      "id": "8b90ea95-efcb-44bb-984c-c1e3a7eb1ad3",
+      "name": "Send a message",
+      "webhookId": "944a3928-c050-4bde-b2d7-a9c26e9fa63a"
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
